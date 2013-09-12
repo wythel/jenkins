@@ -29,7 +29,7 @@ def dluntar(url, tar_dir, run_dir):
     if not os.path.exists(path):
         os.mkdir(path)
 
-    tar_file = os.path.join(TAR_DIR, branch, file_name)
+    tar_file = os.path.join(TAR_DIR, file_name)
     if not os.path.exists(tar_file):
         try:
             print "Dowloading: {u}".format(u=url)
@@ -45,27 +45,12 @@ def dluntar(url, tar_dir, run_dir):
             exit(1)
 
     # untar the file
-    # get path
-    branch_path = os.path.join(RUN_DIR, branch)
-    if not os.path.exists(branch_path):
-        os.mkdir(branch_path)
-    untar_path = os.path.join(RUN_DIR, branch, build)
-    if not os.path.exists(untar_path):
-        os.mkdir(untar_path)
-
-    # if splunk is already there, just exit
-    if os.path.exists(os.path.join(untar_path, "splunk")):
-        print "Splunk is already in {p}, exiting".format(
-                                          p=os.path.join(untar_path, "splunk"))
-        exit(0)
-    else:
-        command = "tar xf {tar} -C {path}".format(tar=tar_file, path=untar_path)
-        print "Running '{c}'".format(c=command)
-        p = subprocess.Popen(command, env=os.environ, shell=True,
-                             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-        p.wait()
-        print os.path.join(untar_path, "splunk", "bin")
+    command = "tar xf {tar} -C {path}".format(tar=tar_file, path=RUN_DIR)
+    print "Running '{c}'".format(c=command)
+    p = subprocess.Popen(command, env=os.environ, shell=True,
+                         stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    p.wait()
 
 def parse_options():
     """
