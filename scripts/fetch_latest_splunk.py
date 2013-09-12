@@ -103,7 +103,7 @@ def main():
 
     # getting the pkg url
     url_template = ("http://releases.splunk.com/cgi-bin/splunk_build_fetcher.py"
-                    "?PLAT_PKG=Darwin-universal.tgz&DELIVER_AS=url&BRANCH={b}")
+                    "?PLAT_PKG=Linux-x86_64.tgz&DELIVER_AS=url&BRANCH={b}")
     if cl is not None:
         print "Getting splunk on branch '{b}' @ {cl}".format(b=branch, cl=cl)
         url_template = url_template + "&P4CHANGE={c}".format(c=cl)
