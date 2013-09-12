@@ -25,10 +25,6 @@ def dluntar(url, tar_dir, run_dir):
     build = url.split("/")[-1].replace("splunk-", "").replace("-Linux-x86_64.tgz","")
     file_name = url.split("/")[-1]
 
-    path = os.path.join(TAR_DIR, branch)
-    if not os.path.exists(path):
-        os.mkdir(path)
-
     tar_file = os.path.join(TAR_DIR, file_name)
     if not os.path.exists(tar_file):
         try:
