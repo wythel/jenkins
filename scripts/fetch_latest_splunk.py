@@ -22,7 +22,7 @@ def dluntar(url, tar_dir, run_dir):
     # find the brach name and build number
 
     branch = url.split("/")[4].replace("_builds", "")
-    build = url.split("/")[-1].replace("splunk-", "").replace("-Darwin-universal.tgz","")
+    build = url.split("/")[-1].replace("splunk-", "").replace("-Linux-x86_64.tgz","")
     file_name = url.split("/")[-1]
 
     path = os.path.join(TAR_DIR, branch)
