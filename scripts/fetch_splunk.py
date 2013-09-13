@@ -98,10 +98,14 @@ def main():
     if "Error" in pkg_url:
         print pkg_url
         exit(1)
+    elif "" == pkg_url:
+        print ("The pkg url is an empty string, "
+               "please check your parameters are correct")
+        print "Brach: {b}, build: {c}".format(b=branch, c=cl)
+        exit(1)
     else:
         # run dluntar
         dluntar(url=pkg_url, tar_dir=pkg_dir, run_dir=splunk_dir)
 
 if __name__ == '__main__':
     main()
-
