@@ -1,5 +1,6 @@
 import os
 import subprocess
+from selenium.webdriver.firefox.webdriver import WebDriver as Firefox
 
 def download_pkg():
     print "Downloading pkg..."
@@ -28,9 +29,16 @@ def start_splunk():
                          stderr=subprocess.PIPE)
     p.wait()
 
+def start_firefox():
+    print "Starting firefox"
+    a = Firefox()
+    a.get("http://www.google.com")
+    print a.title
+
 def main():
     download_pkg()
     start_splunk()
+    start_firefox()
 
 if __name__ == '__main__':
     main()
