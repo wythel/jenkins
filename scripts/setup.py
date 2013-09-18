@@ -1,21 +1,26 @@
-import os
+import os, sys
 import subprocess
 from selenium.webdriver.firefox.webdriver import WebDriver as Firefox
 
 def download_pkg():
     print "Downloading pkg..."
     # download and untar package
-    cmd = ("python $WORKSPACE/scripts/fetch_splunk.py --branch=$OLD_BRANCH"
-           " --pkg-dir=$WORKSPACE --splunk-dir=$WORKSPACE")
+    workspace = os.environ['WORKSPACE']
+    old_branch = os.environ['OLD_BRANCH']
+
+    cmd = ("python {w}/scripts/fetch_splunk.py --branch={b} "
+           "--pkg-dir={w} --splunk-dir={w}".format(w=workspace, b=old_branch))
 
     if "OLD_BUILD" in os.environ:
-        cmd = cmd + " --p4change=$OLD_BUILD"
+        cmd = cmd + " --p4change={build}".format(build=os.environ["OLD_BUILD"])
 
     # call the command
+    print cmd
     p = subprocess.Popen(cmd, env=os.environ, shell=True,
                          stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     p.wait()
+    print "complete"
 
 def start_splunk():
     print "Starting splunk..."
@@ -31,9 +36,11 @@ def start_splunk():
 
 def start_firefox():
     print "Starting firefox"
+    os.environ["DISPLAY"] = ":0.0"
     a = Firefox()
     a.get("http://www.google.com")
     print a.title
+    a.close()
 
 def main():
     download_pkg()
