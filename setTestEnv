@@ -1,0 +1,2 @@
+export PYTHONPATH=$WORKSPACE/lib
+export DISPLAY=:0.0
