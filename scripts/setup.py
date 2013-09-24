@@ -1,6 +1,6 @@
 import os, sys
 import subprocess
-from selenium.webdriver.firefox.webdriver import WebDriver as Firefox
+from optparse import OptionParser
 
 def execute_command(cmd):
     """
@@ -27,14 +27,38 @@ def download_pkg(branch, build=None):
 def start_splunk():
     print "Starting splunk..."
     cmd = "$WORKSPACE/splunk/bin/splunk start --accept-license --answer-yes"
-    if "OLD_BUILD" in os.environ:
-        cmd = cmd + " --p4change=$OLD_BUILD"
     execute_command(cmd)
 
+def stop_splunk():
+    print "Stoping splunk"
+    cmd = "$WORKSPACE/splunk/bin/splunk stop"
+    execute_command(cmd)
+
+def parse_options():
+    """
+    parse options
+    """
+    parser = OptionParser()
+    parser.add_option("--migration", dest="migration", action="store_true",
+                      help="if this flag is set, we run migration"
+                           ", else we start a new splunk")
+    (options, args) = parser.parse_args()
+    return options
+
 def main():
-    build = os.environ['OLD_BUILD'] if 'OLD_BUILD' in os.environ else None
-    download_pkg(branch=os.environ['OLD_BRANCH'], build=build)
-    start_splunk()
+    options = parse_options()
+
+    if options.migration:
+        # do migration
+        stop_splunk()
+        build = os.environ['NEW_BUILD'] if 'NEW_BUILD' in os.environ else None
+        download_pkg(branch=os.environ['NEW_BRANCH'], build=build)
+        start_splunk()
+    else:
+        # start a new splunk
+        build = os.environ['OLD_BUILD'] if 'OLD_BUILD' in os.environ else None
+        download_pkg(branch=os.environ['OLD_BRANCH'], build=build)
+        start_splunk()
 
 if __name__ == '__main__':
     main()
