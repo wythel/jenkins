@@ -21,7 +21,7 @@ def download_pkg(branch, build=None):
     cmd = ("python {w}/scripts/fetch_splunk.py --branch={b} "
            "--pkg-dir={w} --splunk-dir={w}".format(w=workspace, b=branch))
 
-    if build is not None
+    if build is not None:
         cmd = cmd + " --p4change={build}".format(build=build)
 
 def start_splunk():
