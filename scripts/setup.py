@@ -23,6 +23,7 @@ def download_pkg(branch, build=None):
 
     if build is not None:
         cmd = cmd + " --p4change={build}".format(build=build)
+    execute_command(cmd)
 
 def start_splunk():
     print "Starting splunk..."
