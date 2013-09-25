@@ -1,0 +1,2 @@
+2013-09-25 12:12:41,492 - Fetch_Splunk - INFO - Getting the latest splunk pkg on branch 'ace'
+2013-09-25 12:12:42,124 - Fetch_Splunk - INFO - Running 'tar xf ./splunk-5.0.6-181484-Linux-x86_64.tgz -C .'
